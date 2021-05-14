@@ -1,0 +1,46 @@
+# Please addapt the variable for our system
+# Base Variables
+
+# You need also nmake tool that is part of Window SDK
+# compilig
+# nmake -f Makefile_x64.vc
+
+TCL_PATH = C:\HammerDB-4.1
+MARIA_PATH = C:\Program Files\MariaDB 10.5
+SDK_WIN = C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
+syslibpath = C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64
+libpath32      = /LIBPATH:"$(TOOLS32)\lib"
+
+
+TCL_INCLUDE = $(TCL_PATH)\include
+MARIA_INCLUDE = $(SDK_WIN)\include
+WIN_INCLUDE = $(MARIA_PATH)\include\mysql
+tcllibpath     = /LIBPATH:"C:\HammerDB-4.1\lib"
+marialibpath = /LIBPATH:"C:\Program Files\MariaDB 10.5\lib"
+syslibpath = /LIBPATH:"$(syslibpath)"
+#sdklibpath = $(SDK_WIN)\lib
+
+
+MACHINE  = AMD64
+#lflags = /NODEFAULTLIB /NOLOGO /MACHINE:$(MACHINE) $(libpath32) $(tcllibpath) $(marialibpath) $(syslibpath)
+lflags = /NOLOGO /MACHINE:$(MACHINE) $(libpath32) $(tcllibpath) $(marialibpath) $(syslibpath) $(sdklibpath)
+#lflags = /NOLOGO /MACHINE:$(MACHINE) $(tcllibpath) $(marialibpath)
+
+DLLENTRY = @12
+dlllflags = $(lflags) -entry:_DllMainCRTStartup -dll
+
+CLFLAGS = /c -Ob2 -favor:EM64T /W3 /nologo /DUSE_TCL_STUBS
+
+baselibs   = tclstub86.lib libmariadb.lib
+
+# make rules
+
+all: libmariatcl.dll
+
+libmariatcl.dll: mariatcl.obj
+	link $(dlllflags) $(baselibs) -out:$@ mariatcl.obj
+
+mariatcl.obj: mariatcl.c
+	cl $(CLFLAGS) /D_WINDOWS /I"$(TCL_INCLUDE)" /I"$(MARIA_INCLUDE)" /I"$(WIN_INCLUDE)" mariatcl.c
+
+
