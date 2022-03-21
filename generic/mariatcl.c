@@ -781,7 +781,7 @@ static CONST char *MariaConnectOpt[] =
         "-multistatement", "-multiresult",
 #endif
         "-localfiles", "-ignorespace", "-foundrows", "-interactive", "-sslkey", "-sslcert",
-        "-sslca", "-sslcapath", "-sslciphers", "-reconnect", NULL};
+        "-sslca", "-sslcapath", "-sslcipher", "-reconnect", NULL};
 
 static int Mariatcl_Connect(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
