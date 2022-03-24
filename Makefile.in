@@ -79,7 +79,7 @@ includedir	= @includedir@
 
 DESTDIR		=
 
-PKG_DIR		= $(PACKAGE_NAME)-$(PACKAGE_VERSION)
+PKG_DIR		= $(PACKAGE_NAME)$(PACKAGE_VERSION)
 pkgdatadir	= $(datadir)/$(PKG_DIR)
 pkglibdir	= $(libdir)/$(PKG_DIR)
 pkgincludedir	= $(includedir)/$(PKG_DIR)
@@ -177,7 +177,7 @@ COMPILE		= $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(C
 # for the BINARIES that you specified above have already been done.
 #========================================================================
 
-all: binaries libraries doc
+all: binaries libraries 
 
 #========================================================================
 # The binaries target builds executable programs, Windows .dll's, unix
@@ -200,7 +200,7 @@ libraries:
 doc:
 	@echo "user manual doc is as nroff (man) file mysqltcl.n"
 
-install: all install-binaries install-libraries install-doc
+install: all install-binaries install-libraries 
 
 install-binaries: binaries install-lib-binaries install-bin-binaries
 
